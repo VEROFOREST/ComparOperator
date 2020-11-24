@@ -22,7 +22,7 @@ $standardOperators=$OperatorsManager->getStandardOperators();
 
 include "../partials/head.php"
 ?>
-<a href="../index.php" class="brand-logo center">Logo</a>
+<a href="../index.php" class="brand-logo center">Retour au site</a>
 <body>
 
 <div class="row">

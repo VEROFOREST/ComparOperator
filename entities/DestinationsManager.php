@@ -24,13 +24,16 @@ class DestinationsManager extends Manager
   public function getDestinationsCardContent()
   {
     $destinationCards = [];
-    $request = $this->getDb()->query("SELECT
-                                    *
+    $request = $this->getDb()->prepare('SELECT
+                                    `location`,
+                                    `card_pic`
                                 FROM
                                     `destinations`
-                                GROUP BY `location`");
-
+                                GROUP BY `location`,`card_pic`');
+    $request->execute();
+    // var_dump($request->fetch(PDO::FETCH_ASSOC));
     while($destinationsCardContent = $request->fetch(PDO::FETCH_ASSOC)){
+
 
      array_push($destinationCards, new Destination($destinationsCardContent)) ;
       
@@ -54,7 +57,8 @@ class DestinationsManager extends Manager
                                   FROM
                                       `destinations`
                                   WHERE location = :location
-                                  GROUP BY `location`");
+                                  GROUP BY `location`, `parallax_1`, 
+                                      `parallax_2`");
 
     $request->bindValue(':location',$location, PDO::PARAM_STR);
     $request->execute();
@@ -65,23 +69,23 @@ class DestinationsManager extends Manager
       
     };
 
-    // var_dump($destinationInfos);
-    // return $destinationInfos;
-   
-    // var_dump($destinationInfos);
+    
     
 
   }
 
   public function getCarouselPics(){
 
-    $request = $this->getDb()->query("SELECT
+    $request = $this->getDb()->prepare("SELECT
                                     `parallax_1`
                                 FROM
                                     `destinations`
-                                GROUP BY `location`");
+                                GROUP BY `location`,`parallax_1`");
+    $request->execute();
+
     $carouselPics = [];
     $rawCarouselPics = $request->fetchAll(PDO::FETCH_ASSOC);
+    // var_dump($rawCarouselPics);
    
     foreach($rawCarouselPics as $rawCarouselPic){
 

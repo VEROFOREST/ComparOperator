@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   $(document).ready(function(){
-    $('.carousel').carousel();
+    $('.carousel').carousel({fullWidth: true,}).height(500);
 
     setInterval(function(){
     $('.carousel').carousel('next');

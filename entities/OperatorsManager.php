@@ -7,11 +7,12 @@ class OperatorsManager extends Manager
   public function rawsOperators()
   {
     
-    $request = $this->getDb()->query("SELECT
+    $request = $this->getDb()->prepare("SELECT
                                      `id`,
                                      `name`
                                      FROM
                                     `tour_operators`");
+    $request->execute();
 
      $rawOperatorIds = $request->fetchAll(PDO::FETCH_ASSOC);
    
@@ -28,13 +29,14 @@ class OperatorsManager extends Manager
     public function getStandardOperators()
   {
     
-    $request = $this->getDb()->query("SELECT
+    $request = $this->getDb()->prepare("SELECT
                                      `id`,
                                      `name`,
                                      `is_premium`
                                      FROM
                                     `tour_operators`
                                     WHERE is_premium = 0");
+    $request->execute();
 
      $rawOperatorNames = $request->fetchAll(PDO::FETCH_ASSOC);
     // echo "<pre>". var_export($rawOperatorNames, true) . "</pre>"; 
